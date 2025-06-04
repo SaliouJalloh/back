@@ -1,0 +1,65 @@
+spring:
+  profiles:
+    active: ${ENV:dev}
+  application:
+    name: ecommerce-backend
+
+alten:
+  app:
+    jwtSecret: 586B633834416E396D7436753879382F423F4428482B4C6250655367566B5970 # Replace with a strong secret key
+    jwtExpirationMs: 86400000 # 24 hours
+
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    hikari:
+      connection-timeout: 20000
+      max-lifetime: 60000
+      auto-commit: true
+      # ou ajoutez une configuration keepalive plus appropriée
+      keepalive-time: 30000  # 30 secondes (inférieur à max-lifetime)
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    properties:
+      hibernate:
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  servlet:
+    multipart:
+      max-file-size: 50MB
+
+springdoc:
+  default-produces-media-type: application/json
+
+application:
+  apiName: t2g
+  apiVersion: v1
+  frontend:
+    basePath: ${FRONTEND_URL}
+  backend:
+    basePath: ${BACKEND_URL}
+  security:
+    jwt:
+      secret: ${SECRET}
+      accessToken:
+        validitySeconds: ${TOKEN_VALIDITY}
+      refreshToken:
+        validitySeconds: ${REFRESH_TOKEN_VALIDITY}
+
+cors:
+  allowed-origins: ${ORIGINS}
+  allowed-methods: ${METHODS}
+  allowed-headers: ${ALLOWED_HEADERS}
+  exposed-headers: ${EXPOSED_HEADERS}
+  allow-credentials: ${CREDENTIALS}
+  max-age: ${MAX_AGE}
+
+logging:
+  level:
+    root: INFO
