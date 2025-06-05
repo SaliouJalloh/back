@@ -14,10 +14,10 @@ import java.util.Date;
 @Slf4j
 public class JwtProviderService {
 
-    @Value("${alten.app.jwtSecret}")
+    @Value("${application.security.jwt.secretKey}")
     private String jwtSecret;
 
-    @Value("${alten.app.jwtExpirationMs}")
+    @Value("${application.security.jwt.accessToken.expirationTime}")
     private int jwtExpirationMs;
 
     public String generateToken(String email) {

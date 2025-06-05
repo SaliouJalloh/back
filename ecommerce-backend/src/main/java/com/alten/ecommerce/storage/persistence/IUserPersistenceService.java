@@ -6,7 +6,7 @@ public interface IUserPersistenceService {
 
     User findUserByEmail(String email);
 
-    void saveUser(User user);
+    User saveUser(User user);
 
     boolean existsByEmail(String email);
 }

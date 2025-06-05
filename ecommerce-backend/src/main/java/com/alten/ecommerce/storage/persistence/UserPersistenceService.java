@@ -26,10 +26,11 @@ public class UserPersistenceService implements IUserPersistenceService {
     }
 
     @Override
-    public void saveUser(User user) {
+    public User saveUser(User user) {
         UserEntity customerEntity = persistenceMapper.toEntity(user);
         UserEntity savedCustomer = userRepository.save(customerEntity);
         persistenceMapper.toModel(savedCustomer);
+        return user;
     }
 
     @Override

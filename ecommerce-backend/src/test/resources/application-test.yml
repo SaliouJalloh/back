@@ -1,20 +1,28 @@
+# Configuration H2 pour les tests
 spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/ecommerce_db?currentSchema=sc_ecommerce_dev
-    username: postgres
-    password: test
-    driver-class-name: org.postgresql.Driver
   jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: none
-    show-sql: false
-    properties:
       hibernate:
-      dialect: org.hibernate.dialect.PostgreSQLDialect
-      format_sql: true
-    database: postgresql
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-
+        naming:
+          physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.H2Dialect
+          format_sql: true
+    show-sql: true
+  datasource:
+    url: jdbc:h2:mem:testdb;INIT=create domain if not exists jsons as text;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    initialize: true
+  liquibase:
+    default-schema: public
+  # Hibernate Configuration pour H2
+  sql:
+    init:
+      platform: h2
+      mode: always
 server:
   port: 8085
 application:
@@ -26,8 +34,7 @@ application:
     jwt:
       secretKey: 586B633834416E396D7436753879382F423F4428482B4C6250655367566B5970
       accessToken:
-        expirationTime: 86400000 # 24 heures
-
+        expirationTime: 300
 cors:
   allowed-origins: "${application.frontend.basePath}"
   allowed-methods: "GET, POST, PUT, PATCH, DELETE, OPTIONS"

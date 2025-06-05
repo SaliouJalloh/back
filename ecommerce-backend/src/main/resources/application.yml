@@ -4,11 +4,6 @@ spring:
   application:
     name: ecommerce-backend
 
-alten:
-  app:
-    jwtSecret: 586B633834416E396D7436753879382F423F4428482B4C6250655367566B5970 # Replace with a strong secret key
-    jwtExpirationMs: 86400000 # 24 hours
-
   datasource:
     url: ${DB_URL}
     username: ${DB_USER}
@@ -17,9 +12,7 @@ alten:
       connection-timeout: 20000
       max-lifetime: 60000
       auto-commit: true
-      # ou ajoutez une configuration keepalive plus appropriée
       keepalive-time: 30000  # 30 secondes (inférieur à max-lifetime)
-
   jpa:
     hibernate:
       ddl-auto: none
@@ -30,6 +23,12 @@ alten:
       format_sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+  # Configuration Liquibase
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+    contexts: ${LIQUIBASE_CONTEXTS:dev}
+
   servlet:
     multipart:
       max-file-size: 50MB
@@ -37,8 +36,11 @@ alten:
 springdoc:
   default-produces-media-type: application/json
 
+server:
+  port: ${SERVER_PORT:8085}
+  
 application:
-  apiName: t2g
+  apiName: api
   apiVersion: v1
   frontend:
     basePath: ${FRONTEND_URL}
@@ -46,11 +48,9 @@ application:
     basePath: ${BACKEND_URL}
   security:
     jwt:
-      secret: ${SECRET}
+      secretKey: ${SECRET_KEY}
       accessToken:
-        validitySeconds: ${TOKEN_VALIDITY}
-      refreshToken:
-        validitySeconds: ${REFRESH_TOKEN_VALIDITY}
+        expirationTime: ${TOKEN_VALIDITY}
 
 cors:
   allowed-origins: ${ORIGINS}
