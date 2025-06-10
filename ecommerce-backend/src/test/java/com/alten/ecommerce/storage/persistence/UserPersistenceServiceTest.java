@@ -1,10 +1,10 @@
 package com.alten.ecommerce.storage.persistence;
 
+import com.alten.ecommerce.exception.ResourceNotFoundException;
 import com.alten.ecommerce.storage.mapper.IUserPersistenceMapperImpl;
 import com.alten.ecommerce.storage.model.User;
 import com.alten.ecommerce.storage.repository.UserRepository;
 import com.alten.ecommerce.tools.DataProviderTest;
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +47,7 @@ class UserPersistenceServiceTest {
     @Test
     void findUserByEmail_KO_WHEN_DATABASE_REPONSE_EMPTY() {
         //When
-        EntityNotFoundException result = assertThrows(EntityNotFoundException.class, () -> userPersistenceService.findUserByEmail("tata@gmail.com"));
+        ResourceNotFoundException result = assertThrows(ResourceNotFoundException.class, () -> userPersistenceService.findUserByEmail("tata@gmail.com"));
 
         // Then
         assertThat(result).isNotNull();
