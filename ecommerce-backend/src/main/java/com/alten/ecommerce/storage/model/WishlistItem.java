@@ -6,18 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
-
 @Getter
 @Setter
-@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AbstractModel {
+@SuperBuilder
+public class WishlistItem extends AbstractModel {
 
-    private Long id;
-
-    private LocalDateTime createdAt;
-
-    private LocalDateTime updatedAt;
+    private Product product;
+    // La référence à Wishlist n'est pas nécessaire ici, la relation est portée par Wishlist.items
 }
